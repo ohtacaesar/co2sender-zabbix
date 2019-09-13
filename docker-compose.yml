@@ -1,0 +1,19 @@
+version: '3.7'
+
+services:
+  app:
+    build:
+      context: ./
+    devices:
+      - /dev/hidraw0:/dev/hidraw0
+    environment:
+      CO2SENDER_ZABBIX_SERVER: ${CO2SENDER_ZABBIX_SERVER}
+      CO2SENDER_HOST: ${CO2SENDER_HOST}
+    # volumes:
+    #  - .:/app
+    command: ['co2sender', '--zabbix-server', '${CO2SENDER_ZABBIX_SERVER}', '--host', '${CO2SENDER_HOST}']
+    logging:
+      options:
+        max-size: "1m"
+        max-file: "3"
+    restart: ${RESTART:-no}
